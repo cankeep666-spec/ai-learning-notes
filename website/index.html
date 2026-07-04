@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 应用工程师 — 24周学习路线</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--border:#30363d;
+  --text:#e6edf3;--text2:#8b949e;--text3:#6e7681;
+  --accent:#58a6ff;--green:#3fb950;--orange:#d2991d;--red:#f85149;
+  --purple:#a371f7;--cyan:#39c5cf;
+  --radius:8px;
+  --font:system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'SF Mono','Cascadia Code','Fira Code',monospace;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:var(--mono);background:var(--bg3);padding:1px 6px;border-radius:4px;font-size:.88em}
+pre{font-family:var(--mono);background:var(--bg2);padding:16px;border-radius:var(--radius);overflow-x:auto;font-size:.85em;line-height:1.5;border:1px solid var(--border)}
+h1,h2,h3,h4{line-height:1.3}
+ul,ol{padding-left:1.5em}
+li{margin:.25em 0}
+.app{display:flex;min-height:100vh}
+.sidebar{width:260px;background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;z-index:100;display:flex;flex-direction:column;overflow-y:auto}
+.sidebar-logo{padding:20px 20px 16px;border-bottom:1px solid var(--border);font-size:1.1em;font-weight:700;letter-spacing:-0.02em}
+.sidebar-logo span{color:var(--accent)}
+.sidebar-nav{flex:1;padding:12px}
+.sidebar-nav a{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--radius);color:var(--text2);transition:all .15s;font-size:.92em;font-weight:500;margin-bottom:2px}
+.sidebar-nav a:hover,.sidebar-nav a.active{background:var(--bg3);color:var(--text);text-decoration:none}
+.sidebar-nav a.active{color:var(--accent)}
+.sidebar-nav .nav-icon{font-size:1.2em;width:24px;text-align:center;flex-shrink:0}
+.sidebar-footer{padding:12px 20px;border-top:1px solid var(--border);font-size:.8em;color:var(--text3)}
+.sidebar-footer button{width:100%;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:var(--radius);cursor:pointer;font-size:.85em;transition:all .15s}
+.sidebar-footer button:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.main{margin-left:260px;flex:1;padding:32px 40px;max-width:1000px}
+.badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75em;font-weight:600;letter-spacing:0.02em}
+.badge-green{background:#1a3a2a;color:var(--green)}
+.badge-orange{background:#3a2f1a;color:var(--orange)}
+.badge-blue{background:#1a2a3a;color:var(--accent)}
+.badge-purple{background:#2a1a3a;color:var(--purple)}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px}
+.card h3{margin-bottom:8px}
+.progress-bar{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin:8px 0}
+.progress-bar-fill{height:100%;background:var(--green);border-radius:4px;transition:width .3s}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:var(--radius);font-size:.9em;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text);transition:all .15s}
+.btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.checklist{list-style:none;padding-left:0}
+.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:4px;margin:2px 0;cursor:pointer;transition:background .15s}
+.checklist li:hover{background:var(--bg3)}
+.checklist li.done .checklist-text{text-decoration:line-through;color:var(--text3)}
+.checklist li.done .check-box{border-color:var(--green);background:var(--green)}
+.check-box{width:20px;height:20px;border:2px solid var(--text3);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:12px;margin-top:1px}
+.checklist-text{flex:1}
+.week-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:16px}
+.week-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center;cursor:pointer;transition:all .15s;font-size:.9em}
+.week-card:hover{border-color:var(--accent);background:var(--bg3)}
+.week-card.active{border-color:var(--accent);box-shadow:0 0 0 2px rgba(88,166,255,.2)}
+.week-card .week-num{font-size:1.6em;font-weight:700;color:var(--accent)}
+.week-card .week-label{font-size:.78em;color:var(--text2);margin-top:4px}
+.week-card.completed{border-color:var(--green);opacity:.8}
+.res-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:8px}
+.res-card h4{display:flex;align-items:center;gap:8px}
+.res-meta{font-size:.82em;color:var(--text2);margin-top:4px}
+.stars{color:var(--orange)}
+.tabs{display:flex;gap:2px;margin-bottom:24px;border-bottom:2px solid var(--border)}
+.tab{padding:10px 20px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;font-weight:600;font-size:.9em;color:var(--text2);transition:all .15s}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.day-block{border-left:3px solid var(--border);padding:12px 20px;margin:8px 0;transition:border-color .2s}
+.day-block:hover{border-left-color:var(--accent)}
+.day-block.current-day{border-left-color:var(--green);background:rgba(63,185,80,.04)}
+.tag{display:inline-block;padding:2px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;font-size:.75em;margin-right:4px;color:var(--text2)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:flex;align-items:center;justify-content:center}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:440px;width:90%}
+.modal h3{margin-bottom:16px}
+.modal input{width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:var(--radius);font-size:.95em}
+.modal .btn{margin-top:16px}
+@media(max-width:768px){
+  .sidebar{width:100%;position:relative;height:auto;border-right:0;border-bottom:1px solid var(--border)}
+  .sidebar-nav{display:flex;flex-wrap:wrap;gap:4px}
+  .sidebar-nav a{padding:6px 12px;font-size:.82em}
+  .main{margin-left:0;padding:20px 16px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<nav class="sidebar">
+  <div class="sidebar-logo">🤖 AI<span>Engineer</span></div>
+  <div class="sidebar-nav">
+    <a href="#" data-view="dashboard" class="active"><span class="nav-icon">📊</span> 今日任务</a>
+    <a href="#" data-view="curriculum"><span class="nav-icon">📚</span> 完整课表</a>
+    <a href="#" data-view="week"><span class="nav-icon">📅</span> 本周详情</a>
+    <a href="#" data-view="resources"><span class="nav-icon">🔗</span> 学习资料库</a>
+    <a href="#" data-view="projects"><span class="nav-icon">🛠️</span> 实战项目</a>
+    <a href="#" data-view="checkpoints"><span class="nav-icon">✅</span> 阶段自检</a>
+    <a href="#" data-view="methodology"><span class="nav-icon">🧠</span> 学习方法</a>
+    <a href="#" data-view="notes"><span class="nav-icon">📝</span> 笔记模板</a>
+    <a href="#" data-view="diagnosis"><span class="nav-icon">🪞</span> 学习诊断</a>
+  </div>
+  <div class="sidebar-footer">
+    <div style="margin-bottom:8px" id="sidebar-progress"></div>
+    <button onclick="resetProgress()">🔄 重置进度</button>
+  </div>
+</nav>
+<main class="main" id="main-content"></main>
+</div>
+
+<script src="data.js"></script>
+<script>
+// ===== APP STATE =====
+const STORAGE_KEY = 'ai-learning-progress-v1';
+let currentView = 'dashboard';
+
+function loadProgress(){
+  try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||{}}catch(e){return{}}
+}
+function saveProgress(p){localStorage.setItem(STORAGE_KEY,JSON.stringify(p))}
+function getProgress(){return loadProgress()}
+
+function toggleTask(weekIdx,dayIdx,taskIdx){
+  const p=getProgress();
+  const key=`${weekIdx}-${dayIdx}-${taskIdx}`;
+  if(p[key]){delete p[key]}else{p[key]=true}
+  saveProgress(p);
+  renderCurrentView();
+  updateSidebar();
+}
+
+function dismissBanner(){
+  const p=getProgress();
+  p._bannerDismissed=true;
+  saveProgress(p);
+  renderCurrentView();
+}
+function resetProgress(){
+  if(confirm('确定要重置所有学习进度？此操作不可恢复。')){
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  }
+}
+
+function getTodayInfo(){
+  const p=getProgress();
+  const startDate=p._startDate;
+  if(!startDate) return null;
+  const start=new Date(startDate);
+  const today=new Date();
+  const diffDays=Math.floor((today-start)/(1000*60*60*24));
+  if(diffDays<0) return {week:0,day:0,isBeforeStart:true};
+  const dayIndex=diffDays;
+  const weekIdx=Math.floor(dayIndex/7);
+  const dayOfWeek=dayIndex%7;
+  if(weekIdx>=24) return {week:24,day:0,isComplete:true};
+  return {week:weekIdx,day:dayOfWeek,dayIndex,isComplete:false};
+}
+
+function setStartDate(dateStr){
+  const p=getProgress();
+  p._startDate=dateStr;
+  saveProgress(p);
+  renderCurrentView();
+  updateSidebar();
+}
+
+function getWeekProgress(weekIdx){
+  const p=getProgress();
+  let total=0,done=0;
+  const week=CURRICULUM[weekIdx];
+  if(!week) return 0;
+  week.days.forEach((d,di)=>{
+    d.tasks.forEach((_,ti)=>{
+      total++;
+      if(p[`${weekIdx}-${di}-${ti}`]) done++;
+    });
+  });
+  return total?Math.round(done/total*100):0;
+}
+
+function getTotalProgress(){
+  let total=0,done=0;
+  const p=getProgress();
+  CURRICULUM.forEach((w,wi)=>{
+    w.days.forEach((d,di)=>{
+      d.tasks.forEach((_,ti)=>{
+        total++;
+        if(p[`${wi}-${di}-${ti}`]) done++;
+      });
+    });
+  });
+  return total?Math.round(done/total*100):0;
+}
+
+function updateSidebar(){
+  const total=getTotalProgress();
+  const today=getTodayInfo();
+  let html='';
+  if(today&&today.isComplete){html+='🎉 全部完成！'}
+  else if(today&&!today.isBeforeStart){html+=`📅 第 ${today.week+1} 周 · 第 ${today.day+1} 天`}
+  else{html+='⚙️ 请设置开始日期'}
+  html+=`<div class="progress-bar" style="margin-top:8px"><div class="progress-bar-fill" style="width:${total}%"></div></div>`;
+  html+=`<div style="font-size:.78em;margin-top:4px">总进度 ${total}%</div>`;
+  document.getElementById('sidebar-progress').innerHTML=html;
+}
+
+function navigate(view){
+  currentView=view;
+  document.querySelectorAll('.sidebar-nav a').forEach(a=>a.classList.remove('active'));
+  document.querySelector(`[data-view="${view}"]`)?.classList.add('active');
+  renderCurrentView();
+}
+
+function renderCurrentView(){
+  switch(currentView){
+    case 'dashboard': renderDashboard(); break;
+    case 'curriculum': renderCurriculum(); break;
+    case 'week': renderWeekDetail(); break;
+    case 'resources': renderResources(); break;
+    case 'projects': renderProjects(); break;
+    case 'checkpoints': renderCheckpoints(); break;
+    case 'methodology': renderMethodology(); break;
+    case 'notes': renderNotes(); break;
+    case 'diagnosis': renderDiagnosis(); break;
+    default: renderDashboard();
+  }
+}
+
+// ===== DASHBOARD =====
+function renderDashboard(){
+  const today=getTodayInfo();
+  const total=getTotalProgress();
+  const p=getProgress();
+  let html='<h1>📊 今日任务</h1>';
+
+  // Collapsible workflow banner
+  const bannerDismissed = p._bannerDismissed;
+  if(!bannerDismissed){
+    html+=`<div class="card" id="workflow-banner" style="border:2px solid var(--orange);background:rgba(210,153,29,.05);margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <h4 style="color:var(--orange);margin:0">⚠️ 今天怎么学（先读这个，再往下翻）</h4>
+        <button onclick="dismissBanner()" style="background:none;border:none;color:var(--text2);cursor:pointer;font-size:1.2em;padding:0 4px" title="关闭">✕</button>
+      </div>
+      <div style="margin-top:12px;font-size:.9em;line-height:1.7">
+        <p><strong style="color:var(--red)">❌ 不要：</strong>找到资料 → 看懂 → 复制到笔记 → 觉得自己会了</p>
+        <p><strong style="color:var(--red)">❌ 不要：</strong>看视频 → 照着敲一遍 → 跑通了 → 觉得自己会了</p>
+        <p style="margin-top:8px"><strong style="color:var(--green)">✅ 正确流程：</strong></p>
+        <p>① 打开资料 → 设 <strong>15 分钟</strong> 倒计时 → 边看边操作</p>
+        <p>② 时间到 → <strong>关掉所有资料</strong>（抵制「再看一眼」的冲动）</p>
+        <p>③ 打开空白笔记/空白 .py → <strong>盲写</strong>（写不出来就标「不确定」）</p>
+        <p>④ 对照原文 → 红色标错误/遗漏 → <strong>红色部分再来一遍</strong></p>
+        <p style="margin-top:8px;color:var(--accent)">💡 <a href="#" onclick="navigate('diagnosis');return false" style="color:var(--accent);text-decoration:underline">点击查看详细诊断 → 了解你的学习习惯为什么是错的</a></p>
+      </div>
+    </div>`;
+  }
+
+  if(!p._startDate){
+    html+=`
+      <div class="card" style="text-align:center;padding:40px">
+        <h3>🚀 开始你的 24 周 AI 学习之旅</h3>
+        <p style="color:var(--text2);margin:12px 0">设定开始日期，系统会自动计算你每天该学什么</p>
+        <input type="date" id="start-date-input" value="${new Date().toISOString().split('T')[0]}" style="padding:10px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:var(--radius);font-size:.95em;margin:8px 0">
+        <br><button class="btn" onclick="setStartDate(document.getElementById('start-date-input').value)" style="margin-top:12px">🎯 从这天开始！</button>
+      </div>`;
+  }else{
+    html+=`<p style="color:var(--text2);margin-bottom:16px">开始日期：${p._startDate} · 总进度：<strong>${total}%</strong></p>`;
+  }
+
+  if(today){
+    if(today.isComplete){
+      html+=`<div class="card" style="text-align:center;padding:40px">
+        <h2>🎉 恭喜！24 周学习计划已完成！</h2>
+        <p style="color:var(--text2)">你已经完成了全部课程。回顾复习，准备面试吧！</p>
+      </div>`;
+    }else if(today.isBeforeStart){
+      html+=`<div class="card"><p>📅 学习还没开始，请设定开始日期后开始。</p></div>`;
+    }else{
+      const week=CURRICULUM[today.week];
+      const day=week.days[today.day];
+      html+=`<div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+          <div>
+            <span class="badge badge-blue">第 ${today.week+1} 周</span>
+            <span class="badge badge-purple">${week.month}</span>
+          </div>
+          <span style="font-weight:700;font-size:1.1em">${week.theme}</span>
+        </div>
+        <p style="margin-top:8px;color:var(--text2)">${week.desc}</p>
+        <div class="progress-bar" style="margin-top:8px"><div class="progress-bar-fill" style="width:${getWeekProgress(today.week)}%"></div></div>
+        <p style="font-size:.8em;color:var(--text2)">本周完成 ${getWeekProgress(today.week)}%</p>
+      </div>`;
+
+      // Weekly resources
+      const weekRes = WEEKLY_RESOURCES[today.week];
+      if(weekRes){
+        html+=`<div class="card" style="border-left:3px solid var(--accent)">
+          <h4>📖 本周学习资料（精选·高质）</h4>`;
+        weekRes.forEach(r=>{
+          html+=`<div style="margin:10px 0;padding:8px 12px;background:var(--bg3);border-radius:var(--radius)">
+            <a href="${r.url}" target="_blank" style="font-weight:600">${r.title}</a>
+            <span style="font-size:.75em;color:var(--text3);margin-left:8px">${r.source}</span>
+            <p style="font-size:.82em;color:var(--text2);margin:4px 0 0 0">${r.desc}</p>
+          </div>`;
+        });
+        html+=`</div>`;
+      }
+
+      html+=`<div class="day-block current-day">
+        <h4>📌 第 ${today.day+1} 天：${day.title}</h4>`;
+
+      // Day-specific resources
+      const dayRes = DAY_RESOURCES[`${today.week}-${today.day}`];
+      if(dayRes){
+        html+='<div style="margin:8px 0 12px 0;padding:8px 12px;background:rgba(88,166,255,.08);border-radius:var(--radius);border:1px dashed var(--accent)">';
+        html+='<p style="font-size:.82em;font-weight:700;color:var(--accent);margin-bottom:6px">🔗 今天用这些资料（点开直接学）：</p>';
+        dayRes.forEach(r=>{
+          html+=`<div style="margin:4px 0;font-size:.82em">
+            <a href="${r.url}" target="_blank" style="font-weight:600">📄 ${r.title}</a>
+            <span style="color:var(--text2);font-size:.85em"> — ${r.for}</span>
+          </div>`;
+        });
+        html+='</div>';
+      }
+
+      html+=`<ul class="checklist" id="today-tasks">`;
+      day.tasks.forEach((t,ti)=>{
+        const key=`${today.week}-${today.day}-${ti}`;
+        const done=p[key];
+        html+=`<li class="${done?'done':''}" onclick="toggleTask(${today.week},${today.day},${ti})">
+          <div class="check-box">${done?'✓':''}</div>
+          <span class="checklist-text">${t}</span>
+        </li>`;
+      });
+      html+='</ul>';
+
+      // Knowledge connections for today
+      const conns = KNOWLEDGE_CONNECTIONS[`${today.week}-${today.day}`];
+      if(conns){
+        html+='<div style="margin:10px 0 0 0;padding:10px 14px;background:rgba(163,113,247,.06);border-radius:var(--radius);border:1px dashed var(--purple)">';
+        html+='<p style="font-size:.8em;font-weight:700;color:var(--purple);margin-bottom:6px">🔗 知识连线——今天学的以后会用到：</p>';
+        conns.forEach(c=>{
+          html+=`<div style="margin:4px 0;font-size:.78em">
+            <span style="color:var(--purple);font-weight:600">第 ${c.week} 周</span>
+            <span style="color:var(--text2)"> · ${c.topic}：</span>
+            <span style="color:var(--text2)">${c.how}</span>
+          </div>`;
+        });
+        html+='</div>';
+      }
+
+      html+='</div>';
+
+      html+='<h3 style="margin-top:24px">📅 本周其他天数</h3>';
+      week.days.forEach((d,di)=>{
+        if(di===today.day) return;
+        const isPast=di<today.day;
+        let dayDone=0;
+        d.tasks.forEach((_,ti)=>{if(p[`${today.week}-${di}-${ti}`]) dayDone++;});
+        const dayTotal=d.tasks.length;
+        html+=`<div class="day-block ${isPast?'':'current-day'}" style="opacity:${isPast&&dayDone===0?'.6':'1'}">
+          <h4>${isPast?'📝':'🔜'} 第 ${di+1} 天：${d.title} ${dayDone===dayTotal&&dayTotal>0?'✅':''}</h4>`;
+
+        // Day resources
+        const oRes = DAY_RESOURCES[`${today.week}-${di}`];
+        if(oRes){
+          html+='<div style="margin:6px 0 10px 0;padding:6px 10px;background:rgba(88,166,255,.05);border-radius:var(--radius);border:1px dashed var(--border)">';
+          oRes.forEach(r=>{
+            html+=`<div style="margin:3px 0;font-size:.78em">
+              <a href="${r.url}" target="_blank" style="font-weight:600">📄 ${r.title}</a>
+              <span style="color:var(--text2)"> — ${r.for}</span>
+            </div>`;
+          });
+          html+='</div>';
+        }
+
+        html+=`<ul class="checklist">`;
+        d.tasks.forEach((t,ti)=>{
+          const key=`${today.week}-${di}-${ti}`;
+          const done=p[key];
+          html+=`<li class="${done?'done':''}" onclick="toggleTask(${today.week},${di},${ti})">
+            <div class="check-box">${done?'✓':''}</div>
+            <span class="checklist-text">${t}</span>
+          </li>`;
+        });
+        html+='</ul></div>';
+      });
+    }
+  }
+
+  // Review reminder
+  if(today && !today.isComplete && !today.isBeforeStart){
+    const intervals = [
+      {label:'昨天学的 (R1)', daysAgo:1, icon:'🔄'},
+      {label:'3 天前学的 (R2)', daysAgo:3, icon:'🔁'},
+      {label:'7 天前学的 (R3)', daysAgo:7, icon:'📝'},
+      {label:'15 天前学的 (R4)', daysAgo:15, icon:'🔗'},
+      {label:'30 天前学的 (R5)', daysAgo:30, icon:'✅'}
+    ];
+    const reviews = [];
+    intervals.forEach(iv=>{
+      const pastDay = today.dayIndex - iv.daysAgo;
+      if(pastDay >= 0){
+        const pastWeek = Math.floor(pastDay / 7);
+        const pastDayOfWeek = pastDay % 7;
+        if(pastWeek < 24){
+          const pastWeekData = CURRICULUM[pastWeek];
+          const pastDayData = pastWeekData.days[pastDayOfWeek];
+          reviews.push({...iv, week:pastWeek+1, day:pastDayOfWeek+1, title:pastDayData.title});
+        }
+      }
+    });
+
+    if(reviews.length > 0){
+      html+=`<div class="card" style="margin-top:20px;border:2px solid var(--cyan)">
+        <h4 style="color:var(--cyan)">🧠 今日复习提醒（< 10 分钟）</h4>
+        <p style="font-size:.82em;color:var(--text2);margin-bottom:8px">不看原文，每题默写 2 分钟。写不出来标红，周末重点攻。</p>`;
+      reviews.forEach(r=>{
+        html+=`<div style="margin:6px 0;padding:6px 10px;background:rgba(57,197,207,.05);border-radius:4px;font-size:.84em">
+          <span style="color:var(--cyan)">${r.icon} ${r.label}</span>
+          <span style="color:var(--text2)"> · 第 ${r.week} 周第 ${r.day} 天：</span>
+          <strong>${r.title}</strong>
+          <span style="color:var(--text2)"> → 打开 Obsidian 默写核心概念</span>
+        </div>`;
+      });
+      html+=`</div>`;
+    }
+  }
+
+  html+=`<div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
+    <button class="btn" onclick="navigate('curriculum')">📚 查看完整课表</button>
+    <button class="btn" onclick="navigate('resources')">🔗 学习资料库</button>
+    <button class="btn" onclick="navigate('projects')">🛠️ 实战项目</button>
+    <button class="btn" onclick="navigate('checkpoints')">✅ 阶段自检</button>
+  </div>`;
+  document.getElementById('main-content').innerHTML=html;
+}
+
+// ===== CURRICULUM =====
+function renderCurriculum(){
+  let html='<h1>📚 完整课表（24 周）</h1>';
+  html+='<p style="color:var(--text2);margin-bottom:16px">点击任意周查看详情。🟢 完成 · 🔵 进行中 · ⚪ 未开始</p>';
+  const months=[...new Set(CURRICULUM.map(w=>w.month))];
+  months.forEach(month=>{
+    html+=`<h3 style="margin-top:20px">${month}</h3>`;
+    html+='<div class="week-grid">';
+    CURRICULUM.filter(w=>w.month===month).forEach(w=>{
+      const pct=getWeekProgress(w.week-1);
+      let cls='';
+      if(pct===100) cls='completed';
+      const today=getTodayInfo();
+      if(today&&today.week===w.week-1) cls+=' active';
+      html+=`<div class="week-card ${cls}" onclick="viewWeek(${w.week-1})">
+        <div class="week-num">${w.week}</div>
+        <div style="font-size:.85em;font-weight:600;margin-top:2px">${w.theme}</div>
+        <div style="font-size:.75em;color:var(--text2);margin-top:2px">${w.days.length} 天</div>
+        <div class="progress-bar" style="margin-top:6px"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+        <div style="font-size:.7em;color:var(--text2)">${pct}%</div>
+      </div>`;
+    });
+    html+='</div>';
+  });
+  document.getElementById('main-content').innerHTML=html;
+}
+
+// ===== WEEK DETAIL =====
+function viewWeek(weekIdx){
+  currentView='week';
+  document.querySelectorAll('.sidebar-nav a').forEach(a=>a.classList.remove('active'));
+  document.querySelector('[data-view="week"]')?.classList.add('active');
+  renderWeekDetail(weekIdx);
+}
+
+function renderWeekDetail(weekIdx){
+  if(weekIdx===undefined){
+    const today=getTodayInfo();
+    weekIdx=today?today.week:0;
+  }
+  const week=CURRICULUM[weekIdx];
+  if(!week){document.getElementById('main-content').innerHTML='<p>该周不存在</p>';return;}
+  const p=getProgress();
+  const pct=getWeekProgress(weekIdx);
+
+  let html=`<h1>📅 第 ${week.week} 周：${week.theme}</h1>
+    <p style="color:var(--text2)">${week.month} · 完成 ${pct}%</p>
+    <div class="progress-bar" style="margin:8px 0 16px"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+    <div class="card"><h3>🎯 本周目标</h3><ul>`;
+  week.objectives.forEach(o=>html+=`<li>${o}</li>`);
+  html+='</ul></div>';
+
+  // Weekly resources
+  const wRes = WEEKLY_RESOURCES[weekIdx];
+  if(wRes){
+    html+=`<div class="card" style="border-left:3px solid var(--accent)"><h4>📖 本周学习资料（精选·高质）</h4>`;
+    wRes.forEach(r=>{
+      html+=`<div style="margin:10px 0;padding:8px 12px;background:var(--bg3);border-radius:var(--radius)">
+        <a href="${r.url}" target="_blank" style="font-weight:600">${r.title}</a>
+        <span style="font-size:.75em;color:var(--text3);margin-left:8px">${r.source}</span>
+        <p style="font-size:.82em;color:var(--text2);margin:4px 0 0 0">${r.desc}</p>
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  week.days.forEach((d,di)=>{
+    let dayDone=0;
+    d.tasks.forEach((_,ti)=>{if(p[`${weekIdx}-${di}-${ti}`]) dayDone++;});
+    html+=`<div class="day-block">
+      <h4>第 ${di+1} 天：${d.title} ${dayDone===d.tasks.length&&d.tasks.length>0?'✅':''}</h4>`;
+
+    // Day resources
+    const dRes = DAY_RESOURCES[`${weekIdx}-${di}`];
+    if(dRes){
+      html+='<div style="margin:8px 0 12px 0;padding:8px 12px;background:rgba(88,166,255,.08);border-radius:var(--radius);border:1px dashed var(--accent)">';
+      html+='<p style="font-size:.82em;font-weight:700;color:var(--accent);margin-bottom:6px">🔗 学习资料：</p>';
+      dRes.forEach(r=>{
+        html+=`<div style="margin:4px 0;font-size:.82em">
+          <a href="${r.url}" target="_blank" style="font-weight:600">📄 ${r.title}</a>
+          <span style="color:var(--text2);font-size:.85em"> — ${r.for}</span>
+        </div>`;
+      });
+      html+='</div>';
+    }
+
+    html+=`<ul class="checklist">`;
+    d.tasks.forEach((t,ti)=>{
+      const key=`${weekIdx}-${di}-${ti}`;
+      const done=p[key];
+      html+=`<li class="${done?'done':''}" onclick="toggleTask(${weekIdx},${di},${ti})">
+        <div class="check-box">${done?'✓':''}</div>
+        <span class="checklist-text">${t}</span>
+      </li>`;
+    });
+    html+='</ul>';
+
+    // Knowledge connections
+    const conns = KNOWLEDGE_CONNECTIONS[`${weekIdx}-${di}`];
+    if(conns){
+      html+='<div style="margin:10px 0 0 0;padding:10px 14px;background:rgba(163,113,247,.06);border-radius:var(--radius);border:1px dashed var(--purple)">';
+      html+='<p style="font-size:.8em;font-weight:700;color:var(--purple);margin-bottom:6px">🔗 知识连线——今天学的以后会用到：</p>';
+      conns.forEach(c=>{
+        html+=`<div style="margin:4px 0;font-size:.78em">
+          <span style="color:var(--purple);font-weight:600">第 ${c.week} 周</span>
+          <span style="color:var(--text2)"> · ${c.topic}：</span>
+          <span style="color:var(--text2)">${c.how}</span>
+        </div>`;
+      });
+      html+='</div>';
+    }
+
+    html+='</div>';
+  });
+
+  html+=`<div style="display:flex;gap:12px;margin-top:24px;justify-content:space-between">
+    <button class="btn" onclick="viewWeek(${weekIdx-1})" ${weekIdx===0?'disabled':''}>⬅ 上一周</button>
+    <button class="btn" onclick="navigate('curriculum')">📋 全部周</button>
+    <button class="btn" onclick="viewWeek(${weekIdx+1})" ${weekIdx>=23?'disabled':''}>下一周 ➡</button>
+  </div>`;
+  document.getElementById('main-content').innerHTML=html;
+}
+
+// ===== RESOURCES =====
+function renderResources(){
+  let html='<h1>🔗 学习资料库</h1>';
+  html+='<p style="color:var(--text2);margin-bottom:8px">每个资源都经过筛选，只保留真正有用的。⭐ 越多越重要。</p>';
+  const allTags=[...new Set(RESOURCES.flatMap(c=>c.items.map(i=>i.tag)).filter(Boolean))];
+  html+='<div style="margin:16px 0;display:flex;gap:6px;flex-wrap:wrap" id="res-filters">';
+  html+='<span class="tag" style="cursor:pointer;background:var(--accent);color:#fff" onclick="filterRes(\'all\')">全部</span>';
+  allTags.forEach(t=>{
+    html+=`<span class="tag" style="cursor:pointer" onclick="filterRes('${t}')">${t}</span>`;
+  });
+  html+='</div><div id="res-list">';
+  RESOURCES.forEach(cat=>{
+    html+=`<h3 style="margin-top:20px">${cat.cat}</h3>`;
+    cat.items.forEach(item=>{
+      const starsHtml=item.stars?'<span class="stars">'+'⭐'.repeat(item.stars)+'</span>':'';
+      html+=`<div class="res-card" data-tags="${item.tag||''}">
+        <h4><a href="${item.url}" target="_blank">${item.title}</a> ${starsHtml}</h4>
+        ${item.author?`<div style="font-size:.85em;color:var(--text2)">${item.author}</div>`:''}
+        <p style="font-size:.88em;margin-top:6px;color:var(--text2)">${item.desc}</p>
+        <div class="res-meta">${item.tag?`<span class="tag">${item.tag}</span>`:''} <a href="${item.url}" target="_blank">打开 →</a></div>
+      </div>`;
+    });
+  });
+  html+='</div>';
+  document.getElementById('main-content').innerHTML=html;
+}
+
+function filterRes(tag){
+  document.querySelectorAll('#res-filters .tag').forEach(el=>{
+    el.style.background=el.textContent===tag||tag==='all'?'var(--accent)':'var(--bg3)';
+    el.style.color=el.textContent===tag||tag==='all'?'#fff':'var(--text2)';
+  });
+  document.querySelectorAll('.res-card').forEach(card=>{
+    card.style.display=(tag==='all'||card.dataset.tags.includes(tag))?'':'none';
+  });
+}
+
+// ===== PROJECTS =====
+function renderProjects(){
+  let html='<h1>🛠️ 实战项目</h1>';
+  html+='<p style="color:var(--text2);margin-bottom:8px">三个项目覆盖 AI 应用工程师的全部技能维度。</p>';
+  PROJECTS.forEach(proj=>{
+    html+=`<div class="card" style="margin-bottom:24px">
+      <h3>${proj.title} <span class="badge badge-purple">${proj.type}</span> <span class="badge badge-orange">${proj.weeks}</span></h3>
+      <p style="color:var(--text2);margin:8px 0">${proj.desc}</p>
+      <h4>技术栈</h4><p>${proj.tech.map(t=>`<span class="tag">${t}</span>`).join(' ')}</p>
+      <h4 style="margin-top:12px">核心功能</h4><ul>${proj.features.map(f=>`<li>${f}</li>`).join('')}</ul>
+      <h4 style="margin-top:12px">交付物</h4><ul>${proj.deliverables.map(d=>`<li>${d}</li>`).join('')}</ul>
+      <p style="margin-top:12px;padding:8px 12px;background:var(--bg3);border-radius:var(--radius);font-size:.85em;color:var(--orange)">💡 ${proj.scoring}</p>
+    </div>`;
+  });
+  html+=`<div class="card" style="border:2px solid var(--accent)">
+    <h3>📊 项目技能矩阵</h3>
+    <table style="width:100%;margin-top:12px;border-collapse:collapse;font-size:.88em">
+      <tr style="border-bottom:1px solid var(--border)"><th style="text-align:left;padding:6px">技能维度</th><th style="text-align:center;padding:6px">项目一</th><th style="text-align:center;padding:6px">项目二</th><th style="text-align:center;padding:6px">项目三</th></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td>后端开发</td><td style="text-align:center">⭐⭐⭐</td><td style="text-align:center">⭐⭐</td><td style="text-align:center">⭐⭐</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td>RAG</td><td style="text-align:center">⭐⭐⭐</td><td style="text-align:center">⭐</td><td style="text-align:center">-</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td>Agent</td><td style="text-align:center">-</td><td style="text-align:center">⭐⭐⭐</td><td style="text-align:center">-</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td>模型训练</td><td style="text-align:center">-</td><td style="text-align:center">-</td><td style="text-align:center">⭐⭐⭐</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td>部署/DevOps</td><td style="text-align:center">⭐⭐⭐</td><td style="text-align:center">⭐</td><td style="text-align:center">⭐⭐</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td>前端/Demo</td><td style="text-align:center">⭐⭐</td><td style="text-align:center">⭐⭐</td><td style="text-align:center">⭐</td></tr>
+      <tr><td>文档/开源</td><td style="text-align:center">⭐⭐⭐</td><td style="text-align:center">⭐⭐</td><td style="text-align:center">⭐⭐</td></tr>
+    </table>
+  </div>`;
+  document.getElementById('main-content').innerHTML=html;
+}
+
+// ===== CHECKPOINTS =====
+function renderCheckpoints(){
+  let html='<h1>✅ 阶段自检</h1>';
+  html+='<p style="color:var(--text2);margin-bottom:16px">每个阶段结束时对照清单自检。全部打勾才能进入下一阶段。</p>';
+  CHECKPOINTS.forEach((cp,i)=>{
+    const p=getProgress();
+    const key=`checkpoint-${i}`;
+    let checkedCount=0;
+    cp.checks.forEach((_,ci)=>{if(p[`${key}-${ci}`]) checkedCount++;});
+    const pct=cp.checks.length?Math.round(checkedCount/cp.checks.length*100):0;
+    html+=`<div class="card">
+      <h3>${cp.label} ${pct===100?'🎉':''}</h3>
+      <div class="progress-bar"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+      <p style="font-size:.8em;color:var(--text2);margin-bottom:8px">${checkedCount}/${cp.checks.length} 项完成</p>
+      <ul class="checklist">`;
+    cp.checks.forEach((c,ci)=>{
+      const ck=`${key}-${ci}`;
+      const done=p[ck];
+      html+=`<li class="${done?'done':''}" onclick="toggleCheckpoint('${key}',${ci})">
+        <div class="check-box">${done?'✓':''}</div>
+        <span class="checklist-text">${c}</span>
+      </li>`;
+    });
+    html+='</ul></div>';
+  });
+  document.getElementById('main-content').innerHTML=html;
+}
+
+// ===== METHODOLOGY =====
+function renderMethodology(){
+  const M = METHODOLOGY;
+  let html='<h1>🧠 领域大神的学习方法</h1>';
+  html+='<p style="color:var(--text2);margin-bottom:24px">六位顶尖实践者的学习方法 + 10 条通用法则 + 每日行动清单。不仅是理论——每条都对应课程中的具体实践。</p>';
+
+  // Masters section
+  html+='<h2 style="margin-top:8px">🏆 六位大神的核心理念</h2>';
+  M.masters.forEach(m=>{
+    html+=`<div class="card" style="margin-bottom:16px">
+      <h3>${m.name} <span style="font-weight:400;color:var(--text2);font-size:.85em">— ${m.role}</span></h3>
+      <p style="font-style:italic;color:var(--accent);margin:8px 0;font-size:1.05em">${m.quote}</p>
+      <ul style="margin-top:8px">`;
+    m.principles.forEach(p=>html+=`<li style="margin:4px 0">${p}</li>`);
+    html+='</ul></div>';
+  });
+
+  // 10 Laws
+  html+='<h2 style="margin-top:32px">📜 10 条通用学习法则</h2>';
+  M.laws.forEach(l=>{
+    html+=`<div class="card" style="margin-bottom:12px">
+      <h4><span style="color:var(--accent)">法则 ${l.num}：</span>${l.title}</h4>
+      <p style="color:var(--text2);margin-top:6px;font-size:.92em">${l.desc}</p>
+    </div>`;
+  });
+
+  // Daily actions
+  html+='<h2 style="margin-top:32px">📋 每日行动清单</h2>';
+  html+='<div class="card"><table style="width:100%;border-collapse:collapse;font-size:.9em">';
+  html+='<tr style="border-bottom:1px solid var(--border)"><th style="text-align:left;padding:8px;width:30%">法则</th><th style="text-align:left;padding:8px">每天具体行动</th></tr>';
+  M.dailyActions.forEach(a=>{
+    html+=`<tr style="border-bottom:1px solid var(--border)"><td style="padding:8px;font-weight:600">${a.rule}</td><td style="padding:8px;color:var(--text2)">${a.action}</td></tr>`;
+  });
+  html+='</table></div>';
+
+  // Cheat code
+  html+=`<h2 style="margin-top:32px">🎯 你的「作弊码」</h2>
+  <div class="card" style="border:2px solid var(--accent);background:rgba(88,166,255,.05)">
+    <p style="white-space:pre-line;font-size:1.05em;line-height:1.8">${M.cheatCode}</p>
+  </div>`;
+
+  // Quick nav
+  html+=`<div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
+    <button class="btn" onclick="navigate('dashboard')">📊 回到今日任务</button>
+    <button class="btn" onclick="navigate('curriculum')">📚 完整课表</button>
+  </div>`;
+
+  document.getElementById('main-content').innerHTML=html;
+}
+
+// ===== NOTES =====
+function renderNotes(){
+  const today = getTodayInfo();
+  const p = getProgress();
+
+  let html='<h1>📝 笔记模板</h1>';
+  html+='<p style="color:var(--text2);margin-bottom:16px">每天花 20 分钟写费曼笔记——用自己的话、用类比、用「教别人」的口吻。不准抄原文。</p>';
+
+  // Setup check
+  if(!p._startDate){
+    html+=`<div class="card"><p>请先在「今日任务」页面设置开始日期。</p></div>`;
+    document.getElementById('main-content').innerHTML=html;
+    return;
+  }
+
+  if(!today || today.isBeforeStart){
+    html+=`<div class="card"><p>📅 学习还没开始，请等待开始日期。</p></div>`;
+    document.getElementById('main-content').innerHTML=html;
+    return;
+  }
+
+  if(today.isComplete){
+    html+=`<div class="card" style="text-align:center;padding:40px"><h3>🎉 课程已全部完成！</h3><p style="color:var(--text2)">回顾你的 168 篇笔记，整理成知识体系吧。</p></div>`;
+    document.getElementById('main-content').innerHTML=html;
+    return;
+  }
+
+  const week = CURRICULUM[today.week];
+  const day = week.days[today.day];
+  const todayDate = new Date().toISOString().split('T')[0];
+  const weekStr = String(today.week+1).padStart(2,'0');
+  const dayStr = String(today.day+1).padStart(2,'0');
+  const label = `week-${weekStr}`;
+  const fileLabel = `day-${dayStr}`;
+
+  // Generate markdown content
+  const mdContent = `# Day ${today.day+1} — ${day.title}
+
+> 第 ${today.week+1} 周 · ${week.month} · ${todayDate}
+
+## 🎯 今天学的一个概念（费曼）
+
+<!-- 用教别人的语气写。不准用术语。不准抄。 -->
+
+## 🐛 今天的一个 bug
+
+<!-- 错误信息 + 根本原因 + 怎么修的 -->
+
+## ❓ 一个疑问
+
+<!-- 暂时不懂但先记下来，周末集中查 -->
+
+## 📎 今天产出的代码
+
+<!-- 链接到 GitHub commit 或代码片段 -->
+
+---
+
+*第 ${today.week+1} 周第 ${today.day+1} 天 · 累计第 ${today.dayIndex+1} 天*`;
+
+  html+=`<div style="display:flex;gap:24px;flex-wrap:wrap">
+    <div style="flex:1;min-width:280px">
+      <div class="card" style="margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+          <div>
+            <span class="badge badge-blue">第 ${today.week+1} 周</span>
+            <span class="badge badge-purple">第 ${today.day+1} 天</span>
+          </div>
+          <span style="font-size:.85em;color:var(--text2)">${todayDate}</span>
+        </div>
+        <h3 style="margin-top:8px">${day.title}</h3>
+        <p style="color:var(--text2);font-size:.9em">${week.theme}</p>
+      </div>
+
+      <div class="card" style="border:2px solid var(--accent)">
+        <h4>📋 今日笔记模板</h4>
+        <pre style="max-height:400px;overflow-y:auto;font-size:.82em;white-space:pre-wrap">${mdContent.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre>
+        <button class="btn" onclick="copyNotes()" style="margin-top:12px">📋 一键复制 Markdown</button>
+      </div>
+    </div>
+
+    <div style="flex:1;min-width:250px">
+      <div class="card" style="margin-bottom:16px">
+        <h4>📁 推荐的笔记仓库结构</h4>
+        <pre style="font-size:.8em">ai-learning-notes/
+├── ${label}/
+│   ├── ${fileLabel}.md  ← 今天的
+│   ├── ...
+│   └── ${label}-review.md
+├── week-01/
+...
+└── README.md</pre>
+        <p style="font-size:.8em;color:var(--text2);margin-top:8px">创建一个 GitHub 仓库 <code>ai-learning-notes</code>，每天新建一个 .md 文件。面试时直接甩链接。</p>
+      </div>
+
+      <div class="card">
+        <h4>✍️ 费曼笔记检查清单</h4>
+        <ul style="font-size:.88em">
+          <li>✅ 用「外婆能听懂」的语言写的？</li>
+          <li>✅ 有具体的类比/比喻？</li>
+          <li>✅ 没有抄原文？没有堆术语？</li>
+          <li>✅ 重读一遍——别人能看懂吗？</li>
+        </ul>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h4>💡 今天日间随时记</h4>
+        <p style="font-size:.85em;color:var(--text2)">学习中遇到任何东西立刻记下来，晚上整理到正式笔记中：</p>
+        <ul style="font-size:.85em">
+          <li>报错信息 → 复制粘贴 + 截图</li>
+          <li>灵光一现的理解 → 一句话记下来</li>
+          <li>看不懂的东西 → 打个问号</li>
+          <li>好用的命令/技巧 → 记下来</li>
+        </ul>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h4>📊 笔记统计</h4>
+        <p style="font-size:.88em;color:var(--text2)">如果从今天开始坚持：</p>
+        <ul style="font-size:.85em">
+          <li>已完成天数：<strong>${today.dayIndex+1}</strong> 天</li>
+          <li>应写笔记：<strong>${today.dayIndex+1}</strong> 篇</li>
+          <li>剩余天数：<strong>${168 - (today.dayIndex+1)}</strong> 天</li>
+          <li>完成后将有：<strong>168</strong> 篇笔记 + <strong>24</strong> 篇周总结</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
+    <button class="btn" onclick="navigate('dashboard')">📊 回到今日任务</button>
+    <button class="btn" onclick="navigate('week')">📅 本周详情</button>
+  </div>`;
+
+  document.getElementById('main-content').innerHTML=html;
+}
+
+function copyNotes(){
+  const today = getTodayInfo();
+  const week = CURRICULUM[today.week];
+  const day = week.days[today.day];
+  const todayDate = new Date().toISOString().split('T')[0];
+
+  const md = '# Day '+(today.day+1)+' — '+day.title+'\n\n'+
+    '> 第 '+(today.week+1)+' 周 · '+week.month+' · '+todayDate+'\n\n'+
+    '## 🎯 今天学的一个概念（费曼）\n\n<!-- 用教别人的语气写。不准用术语。不准抄。 -->\n\n'+
+    '## 🐛 今天的一个 bug\n\n<!-- 错误信息 + 根本原因 + 怎么修的 -->\n\n'+
+    '## ❓ 一个疑问\n\n<!-- 暂时不懂但先记下来，周末集中查 -->\n\n'+
+    '## 📎 今天产出的代码\n\n<!-- 链接到 GitHub commit 或代码片段 -->\n\n---\n\n'+
+    '*第 '+(today.week+1)+' 周第 '+(today.day+1)+' 天 · 累计第 '+(today.dayIndex+1)+' 天*';
+
+  navigator.clipboard.writeText(md).then(()=>{
+    // Show brief feedback
+    const btn = document.querySelector('.card button.btn');
+    if(btn){
+      const orig = btn.textContent;
+      btn.textContent = '✅ 已复制！去粘贴到 .md 文件吧';
+      btn.style.background = 'var(--green)';
+      btn.style.borderColor = 'var(--green)';
+      setTimeout(()=>{
+        btn.textContent = orig;
+        btn.style.background = '';
+        btn.style.borderColor = '';
+      }, 2000);
+    }
+  }).catch(()=>{
+    // Fallback: select the text
+    const pre = document.querySelector('.card pre');
+    if(pre){
+      const range = document.createRange();
+      range.selectNode(pre);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      alert('请 Ctrl+C 复制，然后粘贴到 .md 文件中');
+    }
+  });
+}
+
+// ===== DIAGNOSIS =====
+function renderDiagnosis(){
+  const D = LEARNING_DIAGNOSIS;
+  let html='<h1>🪞 学习习惯诊断</h1>';
+  html+='<p style="color:var(--text2);margin-bottom:24px">以下是常见的学习幻觉。如果你发现自己中了——不是你的问题，是人脑就是这样设计的。但你需要知道怎么破解。</p>';
+
+  // Bad habits
+  html+='<h2>🔴 你的学习习惯诊断（对照自检）</h2>';
+  D.badHabits.forEach((h,i)=>{
+    html+=`<div class="card" style="border-left:4px solid var(--red);margin-bottom:16px">
+      <h4 style="color:var(--red)">诊断 ${i+1}</h4>
+      <p style="font-weight:600;margin:4px 0">你的习惯：${h.habit}</p>
+      <p style="color:var(--orange);margin:8px 0;font-size:.9em"><strong>为什么是错的：</strong>${h.why}</p>
+      <p style="color:var(--green);margin:8px 0;font-size:.9em"><strong>✅ 应该这么做：</strong>${h.fix}</p>
+    </div>`;
+  });
+
+  // Correct flow
+  html+='<h2 style="margin-top:32px">🟢 正确的学习流程（每次学新东西都用）</h2>';
+  html+='<div class="card">';
+  D.correctFlow.forEach(s=>{
+    html+=`<div style="display:flex;gap:12px;margin:16px 0;align-items:flex-start">
+      <div style="background:var(--accent);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:.9em">${s.step}</div>
+      <div>
+        <strong>${s.title}</strong>
+        <p style="color:var(--text2);font-size:.88em;margin-top:2px">${s.desc}</p>
+      </div>
+    </div>`;
+  });
+  html+='</div>';
+
+  // Daily checklist
+  html+='<h2 style="margin-top:32px">📋 每日学习质量自检</h2>';
+  html+='<div class="card"><ul class="checklist" id="diag-checklist">';
+  const p = getProgress();
+  D.dailyChecklist.forEach((c,i)=>{
+    const key = 'diag-'+i;
+    const done = p[key];
+    html+=`<li class="${done?'done':''}" onclick="toggleDiagCheck('${key}')">
+      <div class="check-box">${done?'✓':''}</div>
+      <span class="checklist-text">${c}</span>
+    </li>`;
+  });
+  html+='</ul></div>';
+
+  // Self test
+  html+=`<h2 style="margin-top:32px">🎯 终极自测</h2>
+  <div class="card" style="border:2px solid var(--accent);background:rgba(88,166,255,.05)">
+    <p style="white-space:pre-line;font-size:1.05em;line-height:1.8">${D.selfTest}</p>
+  </div>`;
+
+  // Navigation
+  html+=`<div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
+    <button class="btn" onclick="navigate('dashboard')">📊 回到今日任务</button>
+    <button class="btn" onclick="navigate('notes')">📝 笔记模板</button>
+    <button class="btn" onclick="navigate('methodology')">🧠 学习方法</button>
+  </div>`;
+
+  document.getElementById('main-content').innerHTML=html;
+}
+
+function toggleDiagCheck(key){
+  const p=getProgress();
+  if(p[key]){delete p[key]}else{p[key]=true}
+  saveProgress(p);
+  renderDiagnosis();
+}
+
+function toggleCheckpoint(key,ci){
+  const p=getProgress();
+  const ck=`${key}-${ci}`;
+  if(p[ck]){delete p[ck]}else{p[ck]=true}
+  saveProgress(p);
+  renderCheckpoints();
+  updateSidebar();
+}
+
+// ===== INIT =====
+function init(){
+  const hash=window.location.hash.slice(1);
+  if(hash&&['dashboard','curriculum','week','resources','projects','checkpoints','methodology','notes','diagnosis'].includes(hash)){
+    currentView=hash;
+  }
+  document.querySelectorAll('.sidebar-nav a').forEach(a=>{
+    a.addEventListener('click',e=>{
+      e.preventDefault();
+      const view=a.dataset.view;
+      window.location.hash=view;
+      navigate(view);
+    });
+  });
+  const input=document.getElementById('start-date-input');
+  if(input){input.value=new Date().toISOString().split('T')[0];}
+  renderCurrentView();
+  updateSidebar();
+}
+
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
